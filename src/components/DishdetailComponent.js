@@ -8,8 +8,8 @@ export class DishdetailComponent extends Component {
       return (
         <Fragment>
           <div className='col-12 col-md-5 m-1'>
-            <Card key={dish.id} className='card-style'>
-              <CardImg top src={dish.image} alt={dish.name} />
+            <Card className='card-style'>
+              <CardImg top key={dish.id} src={dish.image} alt={dish.name} />
               <CardBody>
                 <CardTitle>{dish.name}</CardTitle>
                 <CardText>{dish.description}</CardText>
@@ -28,13 +28,18 @@ export class DishdetailComponent extends Component {
   renderComments = (comments) => {
     if (comments != null) {
       const comment = comments.map((item) => {
-        const date = this.styledDate(item.date);
+        //const date = this.styledDate(item.date);
         return (
-          <div>
+          <div key={item.id}>
             <li>{item.comment}</li>
             <br />
             <li>
-              --{item.author}, {date}
+              --{item.author},{' '}
+              {new Intl.DateTimeFormat('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: '2-digit',
+              }).format(new Date(Date.parse(item.date)))}
             </li>
             <br />
           </div>
@@ -53,11 +58,10 @@ export class DishdetailComponent extends Component {
   };
 
   render() {
-    const { selectedDish } = this.props;
-
+    const { dishprop } = this.props;
     return (
       <div className='container'>
-        <div className='row'>{this.renderDish(selectedDish)}</div>
+        <div className='row'>{this.renderDish(dishprop)}</div>
       </div>
     );
   }
