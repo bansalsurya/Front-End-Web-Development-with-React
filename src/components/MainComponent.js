@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Navbar, NavbarBrand } from 'reactstrap';
 import Menu from './MenuComponent';
 import DishDetail from './DishdetailComponent';
+import Header from './HeaderComponent';
+import Footer from './FooterComponent';
 import { DISHES } from '../shared/dishes';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -21,11 +22,7 @@ class MainComponent extends Component {
   render() {
     return (
       <div>
-        <Navbar dark color='primary'>
-          <div>
-            <NavbarBrand href='/'>Ristornte Con Fusion</NavbarBrand>
-          </div>
-        </Navbar>
+        <Header />
         <Menu
           dishes={this.state.dishes}
           onClick={(dishId) => {
@@ -39,6 +36,7 @@ class MainComponent extends Component {
             )[0]
           }
         />
+        <Footer />
       </div>
     );
   }
