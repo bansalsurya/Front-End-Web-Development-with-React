@@ -17,8 +17,10 @@ function RenderLeader({ leader }) {
       </Media>
       <Media body className='mt-1 mb-1'>
         <Media heading>{leader.name}</Media>
-        <Media className='mt-1 mb-2'>{leader.designation}</Media>
-        {leader.description}
+        <Media className='mt-1 mb-0'>
+          <p>{leader.designation}</p>
+        </Media>
+        <p class='d-none d-md-block'>{leader.description}</p>
       </Media>
       <br />
     </Media>
