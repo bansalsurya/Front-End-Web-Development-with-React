@@ -36,7 +36,7 @@ function RenderDish({ dish }) {
   );
 }
 
-function RenderComments({ comments }) {
+function RenderComments({ comments, addComment, dishId }) {
   if (comments != null) {
     let comms = comments.map((comm, i) => {
       let date = new Intl.DateTimeFormat('en-US', {
@@ -59,7 +59,7 @@ function RenderComments({ comments }) {
       <div className='col-12 col-md-5 m-1'>
         <h4>Comments</h4>
         <div>{comms}</div>
-        <CommentForm />
+        <CommentForm dishId={dishId} addComment={addComment} />
       </div>
     );
   } else {
@@ -85,7 +85,11 @@ const DishDetailComponent = (props) => {
         </div>
         <div className='row'>
           <RenderDish dish={props.dish} />
-          <RenderComments comments={props.comments} />
+          <RenderComments
+            comments={props.comments}
+            addComment={props.addComment}
+            dishId={props.dish.id}
+          />
         </div>
       </div>
     );
@@ -111,8 +115,13 @@ class CommentForm extends Component {
     });
   }
   handleSubmit(values) {
-    console.log('Current State is: ' + JSON.stringify(values));
-    alert('Current State is: ' + JSON.stringify(values));
+    this.toggleModal();
+    this.props.addComment(
+      this.props.dishId,
+      values.rating,
+      values.author,
+      values.comment
+    );
   }
 
   render() {
@@ -145,13 +154,13 @@ class CommentForm extends Component {
                   </Control.select>
                 </Row>
                 <Row className='form-group'>
-                  <Label htmlfor='name'>Name</Label>
+                  <Label htmlfor='name'> Your Name</Label>
                   <Control.text
                     className='form-control'
-                    model='.name'
-                    id='name'
-                    name='name'
-                    placeholde='Name'
+                    model='.author'
+                    id='author'
+                    name='author'
+                    placeholder='Your Name'
                     validators={{
                       required,
                       minLength: minLength(3),
@@ -160,7 +169,7 @@ class CommentForm extends Component {
                   />
                   <Errors
                     className='text-danger'
-                    model='.name'
+                    model='.author'
                     show='touched'
                     messages={{
                       required: 'Required',
