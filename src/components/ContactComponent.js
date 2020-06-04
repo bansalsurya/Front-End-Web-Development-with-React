@@ -228,7 +228,7 @@ class ContactComponent extends Component {
                 <Col md={{ size: 3, offest: 1 }}>
                   <Control.select
                     className='form-control'
-                    model='.constactType'
+                    model='.contactType'
                     name='contactType'
                   >
                     <option>Tel</option>
@@ -237,7 +237,7 @@ class ContactComponent extends Component {
                 </Col>
               </Row>
               <Row className='form-group'>
-                <Label htmlFor='email' md={2}>
+                <Label htmlFor='message' md={2}>
                   Message
                 </Label>
                 <Col md={10}>
