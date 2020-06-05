@@ -9,7 +9,7 @@ import About from './AboutComponent';
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import {
-  addComment,
+  postComment,
   fetchDishes,
   fetchComments,
   fetchPromos,
@@ -27,8 +27,8 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  addComment: (dishID, rating, author, comment) =>
-    dispatch(addComment(dishID, rating, author, comment)),
+  postComment: (dishID, rating, author, comment) =>
+    dispatch(postComment(dishID, rating, author, comment)),
   fetchDishes: () => {
     dispatch(fetchDishes());
   },
@@ -80,7 +80,7 @@ class MainComponent extends Component {
             (comment) => comment.dishId === parseInt(match.params.dishId, 10)
           )}
           commentsErrMess={this.props.comments.ErrMess}
-          addComment={this.props.addComment}
+          postComment={this.props.postComment}
         />
       );
     };
