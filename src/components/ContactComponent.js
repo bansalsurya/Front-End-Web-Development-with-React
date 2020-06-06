@@ -19,13 +19,20 @@ const validEmail = (val) =>
 class ContactComponent extends Component {
   constructor(props) {
     super(props);
-
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleSubmit(values) {
-    console.log('Current State is: ' + JSON.stringify(values));
     alert('Current State is: ' + JSON.stringify(values));
+    this.props.postFeedback(
+      values.firstname,
+      values.lastname,
+      values.telnum,
+      values.email,
+      values.agree,
+      values.contactType,
+      values.message
+    );
     this.props.resetFeedbackForm();
   }
 
@@ -123,7 +130,7 @@ class ContactComponent extends Component {
                     model='.firstname'
                     show='touched'
                     messages={{
-                      required: 'Required',
+                      required: 'Required ',
                       minLength: 'Must be greater than 2 characters',
                       maxLength: 'Must be less than 15 characters',
                     }}
@@ -152,7 +159,7 @@ class ContactComponent extends Component {
                     model='.lastname'
                     show='touched'
                     messages={{
-                      required: 'Required',
+                      required: 'Required ',
                       minLength: 'Must be greater than 2 characters',
                       maxLength: 'Must be less than 15 characters',
                     }}
@@ -181,7 +188,7 @@ class ContactComponent extends Component {
                     model='.telnum'
                     show='touched'
                     messages={{
-                      required: 'Required',
+                      required: 'Required ',
                       isNumber: 'Wrong Number',
                     }}
                   />
@@ -208,7 +215,7 @@ class ContactComponent extends Component {
                     model='.email'
                     show='touched'
                     messages={{
-                      required: 'Required',
+                      required: 'Required ',
                       validEmail: 'Invalid Email Address',
                     }}
                   />
@@ -254,7 +261,7 @@ class ContactComponent extends Component {
               </Row>
               <Row className='form-group'>
                 <Col md={{ size: 10, offset: 2 }}>
-                  <Button type='submit' color='primary'>
+                  <Button type='submit' value='submit' color='primary'>
                     Submit
                   </Button>
                 </Col>

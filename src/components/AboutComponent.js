@@ -8,28 +8,55 @@ import {
   Media,
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import { Loading } from './LoadingComponent';
+import { baseUrl } from '../shared/baseUrl';
+import { FadeTransform, Fade, Stagger } from 'react-animation-components';
 
-function RenderLeader({ leader }) {
-  return (
-    <Media>
-      <Media left href='#' className='align-self-start mr-5 mt-1'>
-        <Media object src={leader.image} alt='Generic placeholder image' />
-      </Media>
-      <Media body className='mt-1 mb-1'>
-        <Media heading>{leader.name}</Media>
-        <Media className='mt-1 mb-0'>
-          <p>{leader.designation}</p>
+function RenderLeader({ leader, isLoading, errMess }) {
+  if (isLoading) {
+    return <Loading />;
+  } else if (errMess) {
+    return <h4>{errMess}</h4>;
+  } else
+    return (
+      <FadeTransform
+        in
+        transform={{
+          exitTransform: 'scale(0.5) translateY(-50%)',
+        }}
+      >
+        <Media>
+          <Media left href='#' className='align-self-start mr-5 mt-1'>
+            <Media
+              object
+              src={baseUrl + leader.image}
+              alt='Generic placeholder image'
+            />
+          </Media>
+          <Media body className='mt-1 mb-1'>
+            <Media heading>{leader.name}</Media>
+            <Media className='mt-1 mb-0'>
+              <p>{leader.designation}</p>
+            </Media>
+            <p class='d-none d-md-block'>{leader.description}</p>
+          </Media>
+          <br />
         </Media>
-        <p class='d-none d-md-block'>{leader.description}</p>
-      </Media>
-      <br />
-    </Media>
-  );
+      </FadeTransform>
+    );
 }
 
 function AboutComponent(props) {
-  const leaders = props.leaders.map((leader) => {
-    return <RenderLeader leader={leader} />;
+  const leaders = props.leaders.leaders.map((leader) => {
+    return (
+      <Fade in>
+        <RenderLeader
+          leader={leader}
+          isLoading={props.dishesLoading}
+          errMess={props.dishesErrMess}
+        />
+      </Fade>
+    );
   });
 
   return (
@@ -108,7 +135,9 @@ function AboutComponent(props) {
           <h2>Corporate Leadership</h2>
         </div>
         <div className='col-12'>
-          <Media list>{leaders}</Media>
+          <Stagger in>
+            <Media list>{leaders}</Media>
+          </Stagger>
         </div>
       </div>
     </div>
